@@ -126,6 +126,9 @@ requires-dist = [
     { name = "streamlit", specifier = ">=1.45.1" },
 ]
 
+[package.metadata.requires-dev]
+dev = []
+
 [[package]]
 name = "gitdb"
 version = "4.0.12"
