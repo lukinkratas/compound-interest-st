@@ -1,5 +1,5 @@
 # Compound Interest Streamlit
-Simple Streamlit App for compound interest visualization.
+Simple Streamlit app for compound interest visualization.
 
 ```bash
     uv sync
