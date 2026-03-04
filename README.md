@@ -1,4 +1,4 @@
-# Compound Interest Streamlit
+# Compound Interest
 
 Simple Streamlit app for compound interest visualization.
 
