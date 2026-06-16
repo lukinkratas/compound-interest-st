@@ -9,18 +9,20 @@ import streamlit as st
 def main() -> None:
     st.header('Compound Interest')
 
-    cola, colb, colc, cold = st.columns(4)
-    nyrs = cola.number_input('Number of Years', min_value=0, value=10, step=1)
-    initial = colb.number_input('Initial Deposit', min_value=0, value=0, step=1_000)
-    yearly_deposit = colc.number_input(
-        'Yearly Deposit', min_value=0, value=120_000, step=1_000
+    cols = st.columns(5)
+    start_yr = cols[0].number_input('Start year', min_value=0, value=2023, step=1)
+    end_yr = cols[1].number_input('End year', min_value=1, value=2053, step=1)
+    initial = cols[2].number_input('Initial Deposit', min_value=0, value=0, step=1_000)
+    yearly_deposit = cols[3].number_input(
+        'Yearly Deposit', min_value=0, value=100_000, step=1_000
     )
-    interest_yield = cold.number_input(
+    interest_yield = cols[4].number_input(
         'Interest Yield [%]', min_value=0.0, value=10.0, step=0.1, format='%.2f'
     )
 
     interest_yield /= 100.0
 
+    nyrs = end_yr - start_yr
     deposits = np.full(nyrs, yearly_deposit)
     deposits[0] += initial
     deposits_sum = deposits.cumsum()
@@ -41,8 +43,9 @@ def main() -> None:
         }
     )
 
-    today = datetime.datetime.today().strftime('%Y-%m-%d')
-    datetimes = pd.period_range(today, periods=nyrs + 1, freq='Y').drop(today)
+    start_dt = datetime.datetime.strptime(str(start_yr), '%Y')
+    end_dt = datetime.datetime.strptime(str(end_yr), '%Y')
+    datetimes = pd.date_range(start_dt, end_dt, freq='YE')
     datetimes = datetimes.astype(pd.StringDtype())
     compound_interest_df.insert(0, 'Datetime', datetimes)
 
